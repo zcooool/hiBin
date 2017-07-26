@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    
+    <script type="text/javascript" charset="utf-8">
+    //mui是什么?对于这个页面而言，他是一个全局的对象，可以存储相关的子页面，预加载页面。
+
+	      	document.addEventListener("plusready",
+	      	function(){
+	      		var nwaiting = plus.nativeUI.showWaiting("加载中...")
+	      		var webviewShow  = plus.webview.create("./module/login/LoginView.html")
+	      		 webviewShow.addEventListener("loaded", function() { //注册新webview的载入完成事件
+		        	nwaiting.close(); //新webview的载入完毕后关闭等待框
+		        webviewShow.show("slide-in-right",150); //把新webview窗体显示出来，显示动画效果为速度150毫秒的右侧移入动画
+		    }, false);
+		    }
+      	
+      	)
+    </script>
+</head>
+<body>
+	
+</body>
+</html>
