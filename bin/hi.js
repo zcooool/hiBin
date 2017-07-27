@@ -8,7 +8,9 @@ const gulp = require('gulp'),
     rename = require('gulp-rename'),
     htmlmin = require('gulp-htmlmin'),
     cheerio = require('gulp-cheerio')
-
+const _ = require('lodash')
+const webpack = require('webpack')
+const fs = require('fs')
 
 const projectDir = process.cwd();
 // 当前模块模版的路径
@@ -17,8 +19,11 @@ const moduleTplDir =path.resolve(__dirname,'../templates/modules')
 const projectTplDir = path.resolve(__dirname,'../templates/projects')
 
 
+// 设置命令行的版本
 program
     .version('v0.1');
+
+// 初始化项目
 program
     .command('init <name>')
     .alias('i')
@@ -26,33 +31,41 @@ program
     .action(function(name){
          genSimpleProject(name)    
     })
+// 初始化模块 
 program
     .command('module <name>')
     .alias('m')
     .description('初始化一个模块')
-    .option('-t,--type <type>','设置模块的模型，默认s（simple），可选 s|l')
+    .option('-t,--type [type]','设置模块的模型，默认s（simple），可选 s|l','simple')
     // .option('--s','是否为简单简单单页面')
     .action(function(name,option){
         console.log(name)
         
-
-        if(option.type){
-            switch(option.type){
-                case 's':
-                   genSimpleModule(name)
-                    break;
-                case 'l':
-                    console.log('开始进行下拉刷新模块的生成...')
-                    break;
-                default: 
-                    console.log('--type|-t 的值必须为在从[s,l]取')
-                break;
-            }
-        }else{
-           genSimpleModule(name);
-        }
+        genSimpleModule(name,option.type);
+        
         
     })
+
+program
+    .description('开发模式中....')
+    .command('develop')
+    .alias('d')
+    .action(function(){
+        webpack(_.merge(require('./webpack.config.js')(projectDir), {
+        watch: true
+         })).watch(200, function(err, stats) {
+            console.log('文件修改完成')
+         });        
+    })
+
+program.command('publish').action(function(){
+    webpack(require('./webpack.config.js')(projectDir),function(err,state){
+        console.log('编译完成...');
+    });
+    gulp.src(`${projectDir}/**/*`).pipe(gulp.dest(`${projectDir}/out`));
+}).description('发布项目')
+
+
 
 program.command('build')
     .option('-d,--del','是否删除，默认保存原文件')
@@ -63,14 +76,7 @@ program.command('build')
        
             .pipe(minifycss()).pipe(gulp.dest(`${projectDir}/module`))
 
-        //压缩js
-        gulp.src([`${projectDir}/module/*/*.js`,`!${projectDir}/module/*/*.min.js`])
-            
-        // .pipe(rename({suffix: '.min'}))   //rename压缩后的文件名
-        .pipe(uglify())    //压缩
-        .pipe(gulp.dest(`${projectDir}/module`));  //输出
-        
-
+       
         // 压缩html
         var HTMLoptions = {
             removeComments: true,//清除HTML注释
@@ -84,7 +90,7 @@ program.command('build')
         };
         gulp.src([`${projectDir}/module/*/*.html`]).pipe(cheerio(function($){
             // console.log($('script[data-main]'))
-            $('script[data-main]').attr('data-main','main.min.js');
+            // $('script[data-main]').attr('data-main','main.min.js');
             // $('link[href$="/custom.css"]').attr('href','./custom.min.css')
         })).pipe(htmlmin(HTMLoptions)).pipe(gulp.dest(`${projectDir}/module`))
         
@@ -94,7 +100,20 @@ program.command('build')
         }
     })
 
-program.parse(process.argv);
+
+
+
+
+
+
+
+    program.parse(process.argv);
+
+
+
+
+
+
 
 
 
@@ -104,12 +123,17 @@ program.parse(process.argv);
  * 生成简单的模块
  * @param {string} name 
  */
-function genSimpleModule(name){
-    console.log(`开始生成简单模块-------'${name}'`) 
+function genSimpleModule(name,type){
     
-    console.log(`模版的生成路径：${projectDir}/module/${name}`)
-    gulp.src(`${moduleTplDir}/simple/*`).pipe(gulp.dest(`${projectDir}/module/${name}`))
-    console.log('生成完成');
+    if(fs.existsSync(`${moduleTplDir}/${type}`)){
+        console.log(`开始生成${type}模块-------'${name}'`) 
+        console.log(`模版的生成路径：${projectDir}/module/${name}`)
+        gulp.src(`${moduleTplDir}/${type}/*`).pipe(gulp.dest(`${projectDir}/module/${name}`))
+        console.log('生成完成');
+    }else{
+        console.log('无选择的模版，请正确选择模版');
+    }
+    
 }
 
 /**
