@@ -9,6 +9,8 @@ function getAlias(dir) {
     return {
         // 特殊
         'moment': path.resolve(dir, './library/moment/moment.js'),
+        'ejs':path.resolve(dir,'./library/ejs/ejs.min.js'),
+        'echarts':path.resolve(dir,'./library/echarts/echarts.min.js')
     };
 };
 function getEntry(dir){
@@ -22,7 +24,7 @@ function getEntry(dir){
         
         res[relativeName] = './' + relativePath;
     });
-console.log(res);
+
     return res;
 }
 module.exports = function(dir){
@@ -38,7 +40,7 @@ module.exports = function(dir){
             mui: 'window.mui',
             moment:'moment',
             ejs:'ejs',
-            echarts:'echart'
+            echarts:'echarts'
         },
         resolve: {
             alias: getAlias(dir)

@@ -3,7 +3,7 @@ const program = require('commander')
 const {projectDir,moduleTplDir,projectTplDir} = require('../config/paths.js')
 
 const gulp = require('gulp')
-
+const fs = require('fs')
 program
     .command('module <name>')
     .alias('m')
@@ -25,9 +25,11 @@ program
 function genSimpleModule(name,type){
     
     if(fs.existsSync(`${moduleTplDir}/${type}`)){
+        let start = new Date().getTime();
         console.log(`开始生成${type}模块-------'${name}'`) 
         console.log(`模版的生成路径：${projectDir}/module/${name}`)
         gulp.src(`${moduleTplDir}/${type}/*`).pipe(gulp.dest(`${projectDir}/module/${name}`))
+         let end = new Date().getTime();
         console.log(`完成模板生成操作，总花费 ${end-start} ms`);
     }else{
         console.log('无选择的模版，请正确选择模版');
