@@ -1,0 +1,41 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+	<link href="../../library/mui/css/mui.min.css" rel="stylesheet" />
+    <link href="css.css" rel="stylesheet" />
+   
+</head>
+<body id="body1">	
+	<div class="page_content"">
+		<div class="login_content">
+			<h4 style="margin-bottom: 18px; margin-top: 0;">浙江省药品集中采购平台</h4>
+			<form id="login_form">
+			<div class="mui-input-group input_content">
+				<div class=" mui-input-row " >
+					<label><span  class="mui-icon mui-icon-person-filled mui-active label_icon"></span></label>
+					<input id = 'usernameInput' name = "username" style="width:85%;"  class="mui-input " type="text" placeholder="请输入用户名/手机号" />
+				</div>
+			</div>
+			<div class="mui-input-group input_content" style="margin-bottom: 18px;">
+				<div class="mui-input-row ">
+					<label><span class="mui-icon mui-icon-locked mui-active label_icon"></span></label>
+					<input id='passwordInput' name = "password" style="width:85%;" type="password" class="mui-input-password" placeholder="请输入密码" />
+				</div>
+			</div>
+			<button formClass = 'login_content' type="button" id="loginBtn" class="mui-btn mui-btn-primary" style="width: 80%; " >登录</button>
+
+			</form>
+		</div>
+	</div>
+	
+
+		<script src="../../library/mui/js/mui.min.js"></script>
+		<script src="../../library/moment/moment.js" ></script> 
+		<script src="../../library/ejs/ejs.min.js" ></script> 
+		<script src="./out.js"></script>
+</body>
+</html>

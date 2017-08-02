@@ -1,0 +1,35 @@
+
+		body {
+			background: url(./assert/loadBg.jpg) no-repeat;
+			background-size:100%;
+			width: 100vw;
+			height:100vh;
+		}
+		.title_img{
+			width: 60%;
+		}
+		.login_content{
+			position: relative;
+			top:15vh;
+			text-align: center;
+		}
+		.input_content{
+			margin: 0px 10vw 15px 10vw;
+		}
+		.label_icon{
+			width:15%;
+			float: left;
+		}
+		.mui-input-row label{
+			width: 15%;
+		}
+		.mui-input-row label span{
+			line-height: 70%;
+		}
+		.register_finpwd{
+			margin-top: 20px;
+		}
+		* {
+			padding: 0;
+			margin: 0;
+		}

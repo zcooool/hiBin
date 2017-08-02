@@ -18,13 +18,15 @@ function getEntry(dir){
     // console.log(dir+'/module/*/main.js');
     var res ={};
     files.forEach(function(file){
-        var relativePath =path.relative(dir,file),
+        var relativePath =path.relative(dir,file);
+        console.log(file);
+        relativeName = relativePath.slice(0, relativePath.lastIndexOf('\\'));
         
-        relativeName = relativePath.slice(0, relativePath.lastIndexOf('/'));
-        
+        // relativeName = path.relative(dir,relativePath,'../');
+        console.log(relativePath);
         res[relativeName] = './' + relativePath;
     });
-
+    console.log(res);
     return res;
 }
 module.exports = function(dir){
