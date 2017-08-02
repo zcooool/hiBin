@@ -9,7 +9,7 @@ exports.showMsg = function(msg){
 
 
 exports.openWindow= function(page){
-	mui.openWindow(id:page,url：page)
+	mui.openWindow(page,page)
 }
 
 /**

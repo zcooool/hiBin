@@ -4,10 +4,6 @@ var base =require('../../common/baseView.js')
 module.exports.base =  base
 
 
-//编写当前页面的视图变化代码
-exports.init = function(){
-	console.log('加载了xxx')
-}
 
 
 

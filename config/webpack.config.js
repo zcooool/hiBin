@@ -19,9 +19,10 @@ function getEntry(dir){
         var relativePath =path.relative(dir,file),
         
         relativeName = relativePath.slice(0, relativePath.lastIndexOf('/'));
-        // console.log(relativeName);/
+        
         res[relativeName] = './' + relativePath;
     });
+console.log(res);
     return res;
 }
 module.exports = function(dir){
@@ -34,7 +35,10 @@ module.exports = function(dir){
         },
          devtool: "eval",
          externals: {
-            mui: 'window.mui'
+            mui: 'window.mui',
+            moment:'moment',
+            ejs:'ejs',
+            echarts:'echart'
         },
         resolve: {
             alias: getAlias(dir)

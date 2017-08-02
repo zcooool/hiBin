@@ -10,8 +10,7 @@ var mui =require('mui')
 var view = require('./view')
 console.log(moment().format('llll')+'开始执行模块simple的方法');
 document.getElementById('clickMe').addEventListener('tap',function(){
-	view.init();
-	view.base.showWaiting('加载');
+	view.base.showMsg('hello world');
 })
 
 
